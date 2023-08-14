@@ -1,24 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
-
+import UserList from './Components/UserList/UserList';
+import AddUser from './Components/AddUser/AddUser';
+import Prompt from './Components/AddUser/Prompt/Prompt';
+import React,{useState} from 'react';
 function App() {
+  const [details,setDetails]=useState('');
+  let data ="";
+  const saveUser=(user)=>{
+    console.log(user);
+    data = user;
+    setDetails((prev)=>{
+      return[
+        ...prev,
+        user
+      ]
+    })
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AddUser onAddUser ={saveUser}/>
+      {details ==="" && <p>No data found</p>}
+      {details !== "" && <UserList items ={details}/>}
+    </>
   );
 }
 
